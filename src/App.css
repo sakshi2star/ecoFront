@@ -1,0 +1,6 @@
+.bgcolor{
+  border-radius: 7px;
+background: #3f5283;
+box-shadow: inset 11px 11px 11px #33426a,
+            inset -11px -11px 11px #4b629c;
+}

@@ -1,0 +1,6 @@
+.newM{
+    border-radius: 10px;
+background: linear-gradient(145deg, #c5f2ff, #a6cbe6);
+box-shadow:  15px 15px 24px #8eaec4,
+             -15px -15px 24px #e2ffff;
+}
