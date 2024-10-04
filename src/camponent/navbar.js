@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, HeartIcon, XMarkIcon } from '@heroicons/react/16/solid'
 import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import { ShopContext } from '../Context/shopContext'
 
 const navigation = [
@@ -19,7 +19,13 @@ function classNames(...classes) {
 export default function Navbar() {
 
 
-  const {getTotalCartItems} = useContext(ShopContext)
+  const { getTotalCartItems, getTotalwishlistItems } = useContext(ShopContext)
+  const navigate = useNavigate(); // Initialize navigate hook
+
+  const handleSignOut = () => {
+    localStorage.removeItem('authToken');
+    navigate('/'); // Redirect to homepage after sign-out
+  };
 
 
   return (
@@ -38,12 +44,12 @@ export default function Navbar() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <Link to="/"> 
-              <img
-                alt="Compny"
-                src="/girl.jpeg"
-                className="h-10 w-auto"
-              />
+              <Link to="/">
+                <img
+                  alt="Compny"
+                  src="/girl.jpeg"
+                  className="h-10 w-auto"
+                />
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -75,27 +81,27 @@ export default function Navbar() {
               <HeartIcon aria-hidden="true" className="h-6 w-6 "/>
             </button> */}
             <Link to="/wish">
-            <button
-              type="button"
-              
-              className="relative flex items-center space-x-2 rounded-full bg-cyan-950 p-2 m-1 text-gray-400 hover:text-white focus:bg-fuchsia-950   "
-            >
-              <HeartIcon aria-hidden="true" className="h-6 w-6" />
-              <span className="text-red-600 " style={{marginLeft:'-2px',marginTop:"-17px"}}>0</span> {/* Display the likes counter */}
-              <span className="sr-only">likes</span>
-            </button>
+              <button
+                type="button"
+
+                className="relative flex items-center space-x-2 rounded-full bg-cyan-950 p-2 m-1 text-gray-400 hover:text-white focus:bg-fuchsia-950   "
+              >
+                <HeartIcon aria-hidden="true" className="h-6 w-6" />
+                <span className="text-red-600 " style={{ marginLeft: '-2px', marginTop: "-17px" }}>{getTotalwishlistItems()}</span> {/* Display the likes counter */}
+                <span className="sr-only">likes</span>
+              </button>
             </Link>
 
             <Link to="/cart">
-            <button
-              type="button"
-              
-              className="relative flex items-center space-x-2 rounded-full bg-cyan-950 p-2 m-1 text-gray-400 hover:text-white focus:bg-fuchsia-950   "
-            >
-              <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
-              <span className="text-red-600 " style={{marginLeft:'-2px',marginTop:"-17px"}}>{getTotalCartItems()}</span> {/* Display the likes counter */}
-              <span className="sr-only">Shopping</span>
-            </button>
+              <button
+                type="button"
+
+                className="relative flex items-center space-x-2 rounded-full bg-cyan-950 p-2 m-1 text-gray-400 hover:text-white focus:bg-fuchsia-950   "
+              >
+                <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
+                <span className="text-red-600 " style={{ marginLeft: '-2px', marginTop: "-17px" }}>{getTotalCartItems()}</span> {/* Display the likes counter */}
+                <span className="sr-only">Shopping</span>
+              </button>
             </Link>
 
 
@@ -107,7 +113,7 @@ export default function Navbar() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="/girl.jpeg"
                     className="h-8 w-8 rounded-full"
                   />
                 </MenuButton>
@@ -127,10 +133,17 @@ export default function Navbar() {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link to="/signIn" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                    Sign out
-                  </Link>
+                  {localStorage.getItem('authToken') ? (
+                    <Link onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                      Sign Out
+                    </Link>
+                  ) : (
+                    <Link to="/signIn" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                      Sign In
+                    </Link>
+                  )}
                 </MenuItem>
+
               </MenuItems>
             </Menu>
           </div>

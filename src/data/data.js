@@ -15,7 +15,7 @@ const products = [
         ],
         category: "Men",
         sizes: ["38", "40", "42", "44"],
-        colors: ["other-color-url1", "other-color-url2"]
+        colors: ["https://www.freepik.com/free-vector/royal-watercolor-valentine-red-background_1541365.htm#query=red%20color&position=1&from_view=keyword&track=ais_hybrid&uuid=36220223-0da2-4e67-9a16-3394ec9ee796", "other-color-url2"]
     },
     {
         id: 2,

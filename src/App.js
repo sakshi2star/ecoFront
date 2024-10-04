@@ -13,15 +13,19 @@ import Home from "./page/home";
 import MenBanner1 from './banner/men.jpg'
 import MenBanner2 from './banner/men.jpg'
 import Wishlist from "./page/wishList";
+// import ImageUpload from "./page/image";
+// import ProductUpload from "./page/addPrd";
 
 
 
 function App() {
   return (
     <div className="flex items-center justify-center  bg-cyan-300">
-      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-full  max-h-full">
+      <div className="bg-white p-2 rounded-lg shadow-md w-full max-w-full  max-h-full ">
         <BrowserRouter>
           <Navbar />
+          {/* <ProductUpload/> */}
+          {/* <ImageUpload/> */}
       
           {/* <AddProductData /> local storage */}
           <Routes>

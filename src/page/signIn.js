@@ -1,8 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function SignInForm() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize navigate hook
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await axios.post('http://localhost:5000/login', {
+            email,
+            password
+        });
+
+        if (response.status === 200 && response.data.token) {
+            localStorage.setItem('authToken', response.data.token);
+            alert('Login successful!');
+            navigate('/');
+        } else {
+            alert('Login unsuccessful.');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        if (error.response && error.response.data && error.response.data.message) {
+            alert(error.response.data.message);
+        } else {
+            alert('Login failed. Please try again.');
+        }
+    }
+};
+
+
+
+
   return (
  
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -13,7 +49,7 @@ function SignInForm() {
               Sign In
             </h1>
 
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
 
                 <button
@@ -37,6 +73,8 @@ function SignInForm() {
                   type="email"
                   name="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required
@@ -50,12 +88,14 @@ function SignInForm() {
                   type="password"
                   name="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -75,7 +115,7 @@ function SignInForm() {
                 <a href="/" className="text-sm font-medium text-pink-700 hover:underline dark:text-pink-300">
                   Forgot password?
                 </a>
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="w-full text-white bg-pink-700  hover:text-black hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -92,6 +132,10 @@ function SignInForm() {
           </div>
         </div>
       </div>
+
+
+
+      
     </section>
   );
 }
