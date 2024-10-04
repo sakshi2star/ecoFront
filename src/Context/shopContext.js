@@ -27,14 +27,14 @@ const ShopContextProvider = (props) => {
     // Define an async function to fetch the products
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/allProduct');
+        const response = await axios.get('https://ecoback-szk1.onrender.com/allProduct');
 
         // Update state with the fetched products
         setProducts(response.data);
 
         // Check if user is authenticated and fetch cart items
         if (localStorage.getItem('authToken')) {
-          const cartResponse = await fetch('http://localhost:5000/getCart', {
+          const cartResponse = await fetch('https://ecoback-szk1.onrender.com/getCart', {
             method: 'POST',
             headers: {
               Accept: 'application/json', // Change this to application/json for JSON response
@@ -90,7 +90,7 @@ const ShopContextProvider = (props) => {
 
     // Check if the user is authenticated before making the request
     if (localStorage.getItem('authToken')) {
-      fetch('http://localhost:5000/addToCart', {
+      fetch('https://ecoback-szk1.onrender.com/addToCart', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -139,7 +139,7 @@ const ShopContextProvider = (props) => {
     });
   
     // Send the request to remove the item from the cart on the server
-    fetch('http://localhost:5000/removeFromCart', {
+    fetch('https://ecoback-szk1.onrender.com/removeFromCart', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
